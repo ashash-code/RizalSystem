@@ -52,6 +52,7 @@
             this.Registration.Name = "Registration";
             this.Registration.Size = new System.Drawing.Size(500, 500);
             this.Registration.TabIndex = 4;
+            this.Registration.Paint += new System.Windows.Forms.PaintEventHandler(this.Registration_Paint);
             // 
             // button2
             // 
@@ -65,6 +66,7 @@
             this.button2.Text = "Submit";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button2_KeyDown);
             // 
             // button1
             // 
@@ -94,12 +96,15 @@
             // 
             // txtVerify
             // 
+            this.txtVerify.AcceptsReturn = true;
             this.txtVerify.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.txtVerify.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtVerify.Location = new System.Drawing.Point(44, 205);
+            this.txtVerify.Multiline = true;
             this.txtVerify.Name = "txtVerify";
-            this.txtVerify.Size = new System.Drawing.Size(394, 30);
+            this.txtVerify.Size = new System.Drawing.Size(377, 40);
             this.txtVerify.TabIndex = 0;
+            this.txtVerify.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtVerify_KeyDown);
             // 
             // AdminVerification
             // 

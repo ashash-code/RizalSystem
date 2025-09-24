@@ -7,19 +7,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace WindowsFormsApp7
 {
     public partial class Settings: Form
     {
-        public Settings()
+        private string userEmail;
+        public Settings(string email)
         {
             InitializeComponent();
+            userEmail = email;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            RegistrationPage v = new RegistrationPage();
+            RegistrationPage v = new RegistrationPage(userEmail);
             v.Show();
             this.Hide();
         }
@@ -27,6 +30,13 @@ namespace WindowsFormsApp7
         private void button1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            AccountSettings v = new AccountSettings(userEmail);
+            v.Show();
+            this.Hide();
         }
     }
 }

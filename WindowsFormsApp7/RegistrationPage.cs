@@ -12,14 +12,23 @@ namespace WindowsFormsApp7
 {
     public partial class RegistrationPage: Form
     {
+        private string userEmail;
+
         public RegistrationPage()
         {
             InitializeComponent();
+            
+
+        }
+        public RegistrationPage(string email)
+        {
+            InitializeComponent();
+            userEmail = email;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Register v = new Register();
+            Register v = new Register(userEmail);
             v.Show();
             this.Hide();
 
@@ -28,7 +37,7 @@ namespace WindowsFormsApp7
 
         private void button2_Click(object sender, EventArgs e)
         {
-            AdminRegister v = new AdminRegister();
+            AdminLogin v = new AdminLogin(userEmail);
             v.Show();
             this.Hide();
         }

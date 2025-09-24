@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,15 +16,19 @@ namespace WindowsFormsApp7
 {
     public partial class AdminVerification: Form
     {
+        private string userEmail;
         private string sentCode = "";
         private string receptorEmail;
         private string PasswordHash;
+        private readonly HttpClient httpClient = new HttpClient();
 
         public AdminVerification(string code, string email, string password)
         {
             InitializeComponent();
+            this.sentCode = code;
             this.receptorEmail = email;
             this.PasswordHash = password;
+            userEmail = email;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -31,26 +37,8 @@ namespace WindowsFormsApp7
 
             if (userInput == sentCode)
             {
-                MessageBox.Show("Verification successful!");
-                string CreatedAt = DateTime.Today.ToString("yyyy-MM-dd");
-                string connection = @"Data Source=laptop-amqpha2s;Initial Catalog=WebApp;Integrated Security=True;Encrypt=False";
-
-                using (SqlConnection con = new SqlConnection(connection))
-                {
-                    string query = "INSERT INTO Userss (Email, PasswordHash, CreatedAt) VALUES (@Email, @PasswordHash, @dateCreated)";
-                    using (SqlCommand cmd = new SqlCommand(query, con))
-                    {
-                        cmd.Parameters.AddWithValue("@Email", receptorEmail);
-                        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(PasswordHash);
-                        cmd.Parameters.AddWithValue("@PasswordHash", hashedPassword);
-                        cmd.Parameters.AddWithValue("@dateCreated", CreatedAt);
-
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-                        con.Close();
-                    }
-                }
-                AdminLogin l = new AdminLogin();
+                
+                AdminHome l = new AdminHome(userEmail);
                 l.Show();
                 this.Hide();
             }
@@ -62,9 +50,32 @@ namespace WindowsFormsApp7
 
         private void button1_Click(object sender, EventArgs e)
         {
-            AdminRegister v = new AdminRegister();
+            AdminRegister v = new AdminRegister(userEmail);
             v.Show();
             this.Hide();
+        }
+
+        private void button2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true; // Prevent ding sound
+                button2.PerformClick();  // Simulate button click
+            }
+        }
+
+        private void txtVerify_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true; // Prevents the ding sound
+                button2.PerformClick();  // Triggers the button click
+            }
+        }
+
+        private void Registration_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
